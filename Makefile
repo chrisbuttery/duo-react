@@ -1,9 +1,10 @@
+BUILD = build/tests.js
 T = ./node_modules/duo-test/bin/duo-test
 TESTS = $(filter-out test/tests.js, $(wildcard test/*.js))
 SRC = $(wildcard index.js lib/*.js)
 
-build.js: test/tests.js
-	duo --use duo-jsx --root . --type js < $< > $@
+$(BUILD): test/tests.js
+	duo -u duo-jsx --root . --type js < $< > $@
 
 test/tests.js: $(SRC) $(TESTS)
 	@echo '// GENERATED FILE: DO NOT EDIT!' > $@
@@ -11,16 +12,22 @@ test/tests.js: $(SRC) $(TESTS)
 
 test: test-phantomjs
 
-test-phantomjs: build.js
-	@$(T) phantomjs --reporter spec
+test-phantomjs: $(BUILD)
+	@$(T) phantomjs --build build/tests.js --reporter spec
 
-test-browser: build.js
-	@$(T) browser
+test-browser: $(BUILD)
+	@$(T) browser --build build/tests.js
 
-test-saucelabs: build.js
-	@$(T) saucelabs -b safari:6..7
+test-saucelabs: $(BUILD)
+	@$(T) saucelabs --build build/tests.js -b safari:6..7
 
 clean:
-	rm -rf test/tests.js build.js components
+	rm -rf test/tests.js build/** components
 
-.PHONY: clean test test-phantomjs test-browser
+build:
+	NODE_ENV=production node app.js
+
+dev:
+	NODE_ENV=development node app.js
+
+.PHONY: clean test test-phantomjs test-browser build dev

@@ -10,7 +10,7 @@
     <div class="js-sandbox" style="display: none"></div>
     <div id="mocha"></div>
     <script>mocha.setup({ ui: 'bdd', timeout: 100 })</script>
-    <script src="./polyfill/function.prototype.bind.js"></script>
+    <script src="./vendor/bind-polyfill.js"></script>
     <script src="../build/tests.js"></script>
     <script>duotest(mocha.run())</script>
   </body>

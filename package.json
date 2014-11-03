@@ -7,8 +7,13 @@
     "test": "test"
   },
   "dependencies": {
+    "duo-test": "^0.3.11",
+    "batch": "^0.5.1",
+    "clean-css": "^2.2.16",
+    "duo": "^0.8.5",
     "duo-jsx": "^1.0.3",
-    "duo-test": "^0.3.11"
+    "duo-myth": "0.0.3",
+    "uglify-js": "^2.4.15"
   },
   "devDependencies": {},
   "scripts": {
